@@ -10,7 +10,7 @@ Install the `ArduinoJSon` libary first:
 pio lib install 64
 ```
 
-Then compile and upload the code to a Wemos D1. You can test the functionality by navigating with your browser to http://$wemosip/
+Then put your wifi credentials in `lib/credentials/credentials.h`, compile and upload the code to a Wemos D1. You can test the functionality by navigating with your browser to http://$wemosip/
 
 The code forwards only the `payload_fields` part of incomming json posts to `/ttn` to Thingspeak. 
 
