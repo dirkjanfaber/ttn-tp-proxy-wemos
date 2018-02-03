@@ -15,11 +15,10 @@ MDNSResponder mdns;
 
 ESP8266WebServer server(80);
 
+HTTPClient http;
+
 String webPage = "";
 String body = "";
-
-int gpio0_pin = 0;
-int gpio2_pin = 2;
 
 void setup(void){
   webPage += "<!doctype html><html lang=\"en\">";
@@ -32,9 +31,13 @@ void setup(void){
 
   // preparing GPIOs
   pinMode(BUILTIN_LED, OUTPUT);
-  digitalWrite(BUILTIN_LED, LOW);
 
   delay(1000);
+
+  WiFi.persistent(false);
+  WiFi.mode(WIFI_OFF);
+  WiFi.mode(WIFI_STA);
+
   Serial.begin(115200);
   WiFi.begin(WIFI, WIFIPW);
   Serial.println("");
@@ -49,6 +52,7 @@ void setup(void){
   Serial.println(WIFI);
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
+  digitalWrite(BUILTIN_LED, HIGH);
 
   if (mdns.begin("ttn-tp-proxy", WiFi.localIP())) {
     Serial.println("MDNS responder started");
@@ -58,33 +62,39 @@ void setup(void){
     server.send(200, "text/html", webPage);
   });
   server.on("/ttn",HTTP_POST, [](){
-    digitalWrite(BUILTIN_LED, HIGH);
+    digitalWrite(BUILTIN_LED, LOW);
     StaticJsonBuffer<200> newBuffer;
     JsonObject& root = newBuffer.parseObject(server.arg("plain"));
     // strip the payload_fields as body for the thingspeak request
     body = root["payload_fields"].as<String>();
 
-    // start a client session to thingspeak with only the body
-    HTTPClient http;
     http.begin("https://api.thingspeak.com/update.json", "78:60:18:44:81:35:BF:DF:77:84:D4:0A:22:0D:9B:4E:6C:DC:57:2C");
     http.addHeader("Content-Type", "application/json");
     int httpCode = http.POST(body);
-
+    String payload = "";
     Serial.print("http result:");
     Serial.println(httpCode);
-    http.writeToStream(&Serial);
 
-    String payload = http.getString();
+    if ( httpCode > 0 ) {
+      payload = http.getString();
+      server.send ( 200, "text/json", payload);
+    } else {
+      String error = "{ \"error\" :";
+      error += httpCode;
+      error += " }";
+      server.send ( 200, "text/json", error);
+    }
+
     http.end();
+    digitalWrite(BUILTIN_LED, HIGH);
 
-    server.send ( 200, "text/json", payload);
-    delay(200);
-    digitalWrite(BUILTIN_LED, LOW);
   });
+  
   server.begin();
   Serial.println("HTTP server started");
 }
 
 void loop(void){
   server.handleClient();
+
 }
