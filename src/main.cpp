@@ -64,20 +64,21 @@ void setup(void){
     // strip the payload_fields as body for the thingspeak request
     body = root["payload_fields"].as<String>();
 
-    // start a client session to thingspeak
+    // start a client session to thingspeak with only the body
     HTTPClient http;
-    int i = http.begin("https://api.thingspeak.com/update.json", "78:60:18:44:81:35:BF:DF:77:84:D4:0A:22:0D:9B:4E:6C:DC:57:2C");
-    Serial.println(i);
+    http.begin("https://api.thingspeak.com/update.json", "78:60:18:44:81:35:BF:DF:77:84:D4:0A:22:0D:9B:4E:6C:DC:57:2C");
     http.addHeader("Content-Type", "application/json");
     int httpCode = http.POST(body);
+
     Serial.print("http result:");
     Serial.println(httpCode);
     http.writeToStream(&Serial);
+
     String payload = http.getString();
     http.end();
 
-    server.send ( 200, "text/json", body);
-    delay(1000);
+    server.send ( 200, "text/json", payload);
+    delay(200);
     digitalWrite(BUILTIN_LED, LOW);
   });
   server.begin();
