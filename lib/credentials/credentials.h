@@ -1,0 +1,2 @@
+#define WIFI ""
+#define WIFIPW ""
