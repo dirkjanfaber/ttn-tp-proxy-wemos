@@ -39,3 +39,7 @@ curl \
 ```
 
 If this works, configure your home router to forward packages a port of your choise to port 80 of the Wemos. Last, configure the things network http integration to point to http://$yourip:$yourport/ttn
+
+# Troubleshooting
+
+If you end up with a 400 responses, the buffer for the json parsing might not be large enough. Check your JSON on http://arduinojson.org/assistant/ to get the size right for your settings. 
