@@ -42,4 +42,4 @@ If this works, configure your home router to forward packages a port of your cho
 
 # Troubleshooting
 
-If you end up with a 400 responses, the buffer for the json parsing might not be large enough. Check your JSON on http://arduinojson.org/assistant/ to get the size right for your settings. 
+If you end up with "`400`" responses, the buffer for the json parsing might not be large enough. Check your JSON on http://arduinojson.org/assistant/ to get the size right for your settings. 
