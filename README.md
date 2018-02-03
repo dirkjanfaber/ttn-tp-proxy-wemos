@@ -1,5 +1,6 @@
 # ttn-tp-proxy-wemos
-Use a Wemos to proxy between the things network and thingspeak. 
+
+The http integration of [The Things Network](https://thethingsnetwork.com/) is limited in the sence that it does not allow to only forward the `payload_fieds` (  https://www.thethingsnetwork.org/docs/applications/http/#uplink), so you can pass it directly to [Thingspeak](https://thingspeak.com/). In order to fix this, I used a Wemos D1 to do this filtering/proxy between The Things Network and Thingspeak. I am sure this will work on other devices too, as long as they run the Arduino IDE and have some network connection.
 
 This code can be compiled using https://platform.io/
 
@@ -9,11 +10,11 @@ Install the `ArduinoJSon` libary first:
 pio lib install 64
 ```
 
-Then compile and upload the code to a Wemos D1. 
+Then put your wifi credentials in `lib/credentials/credentials.h`, compile and upload the code to a Wemos D1. You can test the functionality by navigating with your browser to http://$wemosip/
 
-You can test it locally by navigating with your browser to http://$wemosip/
+The code forwards only the `payload_fields` part of incomming json posts to `/ttn` to Thingspeak. 
 
-A simple test is to send some data to thingspeak:
+A simple test is to send some data to the Wemos. Make sure you have created a channel on Thingspeak first and have the *Write API Key* around. 
 
 ```
 read -p "Wemos D1 ip: " wemos_ip
@@ -37,4 +38,4 @@ curl \
 
 ```
 
-Last, configure your home router to forward packages a port of your choise to port 80 of the Wemos. Last, configure the things network http integration to point to http://$yourip:$yourport/ttn
+If this works, configure your home router to forward packages a port of your choise to port 80 of the Wemos. Last, configure the things network http integration to point to http://$yourip:$yourport/ttn
