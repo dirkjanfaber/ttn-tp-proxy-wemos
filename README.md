@@ -18,8 +18,21 @@ A simple test is to send some data to thingspeak:
 ```
 read -p "Wemos D1 ip: " wemos_ip
 read -p "Thingspeak API key: "  api_key
-curl -d '{ "api_key": "${api_key}", "field1": 22 }' \
-  -H "Content-Type: application/json" -X POST \
+read -p "Value to post: " value
+
+DATA=$(cat <<__EOT__
+{ "foo" : "bar ",
+  "payload_fields" : {
+    "api_key" : "${api_key}",
+    "field1" : "${value}"
+  } }
+__EOT__
+)
+
+curl \
+  --header "Content-Type: application/json" \
+  --request POST \
+  --data "${DATA}" \
   http://${wemos_ip}/ttn
 
 ```
