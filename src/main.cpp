@@ -26,7 +26,7 @@ void setup(void){
   webPage += "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">";
   webPage += "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\" integrity=\"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm\" crossorigin=\"anonymous\">";
   webPage += "<title>TTN-TP Proxy</title><body><h1>TTN-TP Proxy</h1>";
-  webPage += "<p>Post your json to <strong>/ttn/</strong> and it magically forwards the payload to thingspeak.</p>";
+  webPage += "<p>Post your json to <strong>/ttn</strong> and it magically forwards the payload to thingspeak.</p>";
   webPage += "</body></html>";
 
   // preparing GPIOs
