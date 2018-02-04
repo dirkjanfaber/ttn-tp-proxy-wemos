@@ -2,7 +2,7 @@
 
 The http integration of [The Things Network](https://thethingsnetwork.com/) is limited in the sence that it does not allow to only forward the `payload_fieds` (  https://www.thethingsnetwork.org/docs/applications/http/#uplink), so you can pass it directly to [Thingspeak](https://thingspeak.com/). In order to fix this, I used a Wemos D1 to do this filtering/proxy between The Things Network and Thingspeak. I am sure this will work on other devices too, as long as they run the Arduino IDE and have some network connection.
 
-This code can be compiled using https://platform.io/
+This code can be compiled using https://platformio.org/
 
 Install the `ArduinoJSon` libary first:
 
