@@ -27,9 +27,12 @@ void setup(void){
   webPage += "<head>\n<meta charset=\"utf-8\">";
   webPage += "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">";
   webPage += "<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\" integrity=\"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm\" crossorigin=\"anonymous\">";
-  webPage += "<title>TTN-TP Proxy</title><body><h1>TTN-TP Proxy</h1>";
+  webPage += "<title>TTN-TP Proxy</title><body>";
+  webPage += "<div class=\"container\">";
+  webPage += "<h1>TTN-TP Proxy</h1>";
   webPage += "<p>Post your json to <strong>/ttn</strong> and it magically forwards the payload to thingspeak.</p>";
-  webPage += "</body></html>";
+  webPage += "<p>Check <a href=\"https://github.com/steviethecat/ttn-tp-proxy-wemos/blob/master/README.md\">github</a> for more information</p>";
+  webPage += "</div></body></html>";
 
   // preparing GPIOs
   pinMode(BUILTIN_LED, OUTPUT);
