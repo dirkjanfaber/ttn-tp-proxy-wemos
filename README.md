@@ -4,7 +4,7 @@ The http integration of [The Things Network](https://thethingsnetwork.com/) is l
 
 This code can be compiled using http://platformio.org/
 
-Install the `ArduinoJSon` libary first:
+The `ArduinoJson` library ought to install automatically, but if not, install the `ArduinoJSon` libary:
 
 ```
 pio lib install 64
@@ -12,9 +12,9 @@ pio lib install 64
 
 Then put your wifi credentials in `lib/credentials/credentials.h`, compile and upload the code to a Wemos D1. You can test the functionality by navigating with your browser to http://$wemosip/
 
-The code forwards only the `payload_fields` part of incomming json posts to `/ttn` to Thingspeak. 
+The code forwards only the `payload_fields` part of incomming json posts to `/ttn` to Thingspeak.
 
-A simple test is to send some data to the Wemos. Make sure you have created a channel on Thingspeak first and have the *Write API Key* around. 
+A simple test is to send some data to the Wemos. Make sure you have created a channel on Thingspeak first and have the *Write API Key* around.
 
 ```
 read -p "Wemos D1 ip: " wemos_ip
@@ -38,8 +38,12 @@ curl \
 
 ```
 
-If this works, configure your home router to forward packages a port of your choise to port 80 of the Wemos. Last, configure the things network http integration to point to http://$yourip:$yourport/ttn
+If this works, configure your home router to forward packages a port of your choice to port 80 of the Wemos. Last, configure the things network http integration to point to http://$yourip:$yourport/ttn
+
+# OTA
+
+The firmware also allows for over the air (OTA) updates. Adjust the `upload_port` in your `platformio.ini` file to match the ip of the Wemos.
 
 # Troubleshooting
 
-If you end up with "`400`" responses, the buffer for the json parsing might not be large enough. Check your JSON on http://arduinojson.org/assistant/ to get the size right for your settings. 
+If you end up with "`400`" responses, the buffer for the json parsing might not be large enough. Check your JSON on http://arduinojson.org/assistant/ to get the size right for your settings.
