@@ -8,7 +8,6 @@
 #include <ESP8266mDNS.h>
 
 #include <ArduinoJson.h>
-#include <WiFiClient.h>
 #include <ESP8266HTTPClient.h>
 
 #include <ArduinoOTA.h>
